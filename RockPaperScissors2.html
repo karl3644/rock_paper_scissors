@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="mystyles.css">
+		<title></title>
+	</head>
+
+	<body>
+        
+        <script>
+
+            // add in functionaility if rps is not entered
+
+            let playerSelection = "";
+            let RockPaperScissors = ["rock", "paper", "scissors"];
+            let computerSelection = "";
+            let userScore = 0;
+            let computerScore = 0;
+            let rounds = 0;
+
+            function computerPlay() {
+                return RockPaperScissors[Math.floor(Math.random() * RockPaperScissors.length)];
+            }
+
+            function game() {
+
+                for (let i = 0; i < 5; i++) {
+                    
+                    playerSelection = prompt("Please enter rock, paper or scissors.").toLowerCase();
+                    computerSelection = computerPlay();
+
+                    if (!(playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors")) {
+                        i--;
+                        alert("You need to enter rock, paper or scissors.")
+                    } else {
+                        rounds++;
+                        console.log("Round "+ rounds);
+                        console.log(playRound(playerSelection, computerSelection));
+                        console.log("Your score: " + userScore, "|| Computer score: " + computerScore);
+                    }
+                    
+                    
+                }
+
+                if (userScore > computerScore) {
+                    console.log("You win the match! Congratulations.")
+                } else if (computerScore > userScore) {
+                    console.log("Computer wins the match :( ")
+                } else {
+                    console.log("The match is a draw!")
+                }
+                
+            }
+
+            function playRound(playerSelection, computerSelection) {
+                if (playerSelection === "rock" && computerSelection === "rock") {
+                    return "Rock vs rock. Draw!";
+                } else if (playerSelection === "rock" && computerSelection === "paper") {
+                    computerScore++;
+                    return "Rock vs paper. You lose this round!";
+                } else if (playerSelection === "rock" && computerSelection === "scissors") {
+                    userScore++;
+                    return "Rock vs scissors. You win this round!";
+                } else if (playerSelection === "paper" && computerSelection === "rock") {
+                    userScore++;
+                    return "Paper vs rock. You win! this round";
+                } else if (playerSelection === "paper" && computerSelection === "paper") {
+                    return "Paper vs paper. Draw!";
+                } else if (playerSelection === "paper" && computerSelection === "scissors") {
+                    computerScore++;
+                    return "Paper vs scissors. You lose this round!";
+                } else if (playerSelection === "scissors" && computerSelection === "rock") {
+                    computerScore++;
+                    return "Scissors vs rock. You lose this round";
+                } else if (playerSelection === "scissors" && computerSelection === "paper") {
+                    userScore++;
+                    return "Scissors vs paper. You win! this round";
+                } else if (playerSelection === "scissors" && computerSelection === "scissors") {
+                    return "Scissors vs scissors. Draw!";
+                }
+            }
+
+            // console.log(playRound(playerSelection, computerSelection));
+
+        </script>
+
+    </body>
+</html> 
