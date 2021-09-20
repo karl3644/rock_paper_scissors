@@ -2,28 +2,105 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="mystyles.css">
+		<link rel="stylesheet" href="rps.css">
 		<title></title>
 	</head>
 
 	<body>
-        
-        <script>
 
-            // add in functionaility if rps is not entered
+        <h2>Rock Paper Scissors</h2>
+        <h3>Winner is the first to get 5 points!</h3>
+        
+        <div>
+            
+        </div>
+
+        <div id="buttonChoices">
+            <button id="rock" class="choice">Rock</button>
+            <button id="paper" class="choice">Paper</button>
+            <button id="scissors" class="choice">Scissors</button>
+        </div>
+
+        <div id="results">
+            <p>
+                <span id="commentation"></span><br>
+            </p>
+            <p id="scores">
+                Round: <span id="rounds">1</span><br>
+                Player score: <span id="playerScore">0</span><br>
+                Computer score: <span id="computerScore">0</span>
+            </p>
+        </div>
+
+        <script>
 
             let playerSelection = "";
             let RockPaperScissors = ["rock", "paper", "scissors"];
             let computerSelection = "";
             let userScore = 0;
             let computerScore = 0;
-            let rounds = 0;
+            let rounds = 1;
+            let comment = "";
 
             function computerPlay() {
                 return RockPaperScissors[Math.floor(Math.random() * RockPaperScissors.length)];
             }
 
-            function game() {
+            window.addEventListener('click', function(e){
+                playerSelection = e.target.id;
+
+                if (playerSelection === "rock" || e.target.id === "paper" || e.target.id === "scissors") {
+                    computerSelection = computerPlay();
+                    rounds++;
+                    
+                    playRound(playerSelection, computerSelection);
+                    
+                    displays();
+
+                    if (userScore == 5) {
+                        alert("You win the match!");
+                        userScore = 0;
+                        computerScore = 0;
+                        rounds = 1;
+                        comment = "";
+                        displays();
+                    } else if (computerScore == 5) {
+                        alert("Computer wins the match!");
+                        userScore = 0;
+                        computerScore = 0;
+                        rounds = 1;
+                        comment = "";
+                        displays();
+                    };
+                }
+            });
+
+            const displays = () => {
+                displayPlayerScore();
+                displayComputerScore();
+                displayRound();
+                commentate();
+            };
+
+            const commentate = () => {
+                return document.getElementById('commentation').textContent = `${comment}`;
+            };
+
+            const displayPlayerScore = () => {
+                return document.getElementById('playerScore').textContent = `${userScore}`;
+            };
+
+            const displayComputerScore = () => {
+                return document.getElementById('computerScore').textContent = `${computerScore}`;  
+            };
+            
+            const displayRound = () => {
+                return document.getElementById('rounds').textContent = `${rounds}`;   
+            };
+
+            
+
+            /*  function game() {
 
                 for (let i = 0; i < 5; i++) {
                     
@@ -42,7 +119,7 @@
                     
                     
                 }
-
+            
                 if (userScore > computerScore) {
                     console.log("You win the match! Congratulations.")
                 } else if (computerScore > userScore) {
@@ -52,36 +129,35 @@
                 }
                 
             }
+            */
 
             function playRound(playerSelection, computerSelection) {
                 if (playerSelection === "rock" && computerSelection === "rock") {
-                    return "Rock vs rock. Draw!";
+                    comment = "Computer chooses rock. Draw!";
                 } else if (playerSelection === "rock" && computerSelection === "paper") {
                     computerScore++;
-                    return "Rock vs paper. You lose this round!";
+                    comment =  "Computer chooses paper. You lose this round!";
                 } else if (playerSelection === "rock" && computerSelection === "scissors") {
                     userScore++;
-                    return "Rock vs scissors. You win this round!";
+                    comment =  "Computer chooses scissors. You win this round!";
                 } else if (playerSelection === "paper" && computerSelection === "rock") {
                     userScore++;
-                    return "Paper vs rock. You win! this round";
+                    comment =  "Computer chooses rock. You win! this round";
                 } else if (playerSelection === "paper" && computerSelection === "paper") {
-                    return "Paper vs paper. Draw!";
+                    comment =  "Computer chooses paper. Draw!";
                 } else if (playerSelection === "paper" && computerSelection === "scissors") {
                     computerScore++;
-                    return "Paper vs scissors. You lose this round!";
+                    comment =  "Computer chooses scissors. You lose this round!";
                 } else if (playerSelection === "scissors" && computerSelection === "rock") {
                     computerScore++;
-                    return "Scissors vs rock. You lose this round";
+                    comment =  "Computer chooses rock. You lose this round";
                 } else if (playerSelection === "scissors" && computerSelection === "paper") {
                     userScore++;
-                    return "Scissors vs paper. You win! this round";
+                    comment =  "Computer chooses paper. You win! this round";
                 } else if (playerSelection === "scissors" && computerSelection === "scissors") {
-                    return "Scissors vs scissors. Draw!";
+                    comment =  "Computer chooses scissors. Draw!";
                 }
             }
-
-            // console.log(playRound(playerSelection, computerSelection));
 
         </script>
 
